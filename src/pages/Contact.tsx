@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,14 +14,48 @@ import { COMPANY_INFO } from "@/lib/constants";
 export default function Contact() {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    service: "",
+    message: "",
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.name || !formData.phone || !formData.email || !formData.message) {
+      toast({ title: "Missing fields", description: "Please fill in all required fields." });
+      return;
+    }
+
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const selectedServiceTitle =
+        services.find((service) => service.id === formData.service)?.title || formData.service;
+
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...formData, service: selectedServiceTitle }),
+      });
+
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data?.error || "Failed to send message.");
+      }
+
       toast({ title: "Message sent!", description: "We'll get back to you within 24 hours." });
-    }, 1500);
+      setFormData({ name: "", phone: "", email: "", service: "", message: "" });
+    } catch (error) {
+      toast({
+        title: "Failed to send",
+        description: error instanceof Error ? error.message : "Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const whatsappUrl = `https://wa.me/${COMPANY_INFO.whatsapp}?text=Hello%20Rigour%20Realty!`;
@@ -49,17 +82,43 @@ export default function Contact() {
                   <h2 className="text-2xl font-bold mb-6">Send Us a Message</h2>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid sm:grid-cols-2 gap-4">
-                      <Input placeholder="Your Name" required />
-                      <Input type="tel" placeholder="Phone Number" required />
+                      <Input
+                        placeholder="Your Name"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                      />
+                      <Input
+                        type="tel"
+                        placeholder="Phone Number"
+                        required
+                        value={formData.phone}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
+                      />
                     </div>
-                    <Input type="email" placeholder="Email Address" required />
-                    <Select>
+                    <Input
+                      type="email"
+                      placeholder="Email Address"
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                    />
+                    <Select
+                      value={formData.service}
+                      onValueChange={(value) => setFormData((prev) => ({ ...prev, service: value }))}
+                    >
                       <SelectTrigger><SelectValue placeholder="Select a service" /></SelectTrigger>
                       <SelectContent>
                         {services.map((s) => (<SelectItem key={s.id} value={s.id}>{s.title}</SelectItem>))}
                       </SelectContent>
                     </Select>
-                    <Textarea placeholder="Your message..." rows={5} required />
+                    <Textarea
+                      placeholder="Your message..."
+                      rows={5}
+                      required
+                      value={formData.message}
+                      onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
+                    />
                     <Button type="submit" className="w-full accent-gradient text-accent-foreground" disabled={isSubmitting}>
                       <Send className="mr-2 h-4 w-4" />{isSubmitting ? "Sending..." : "Send Message"}
                     </Button>

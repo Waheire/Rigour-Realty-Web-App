@@ -71,3 +71,35 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Email Setup (Contact + Quote forms)
+
+This project now includes a Node.js email API using SendGrid.
+
+### 1. Configure environment
+
+Copy `.env.example` to `.env` and set:
+
+- `SENDGRID_API_KEY`
+- `SENDGRID_FROM_EMAIL` (must be a verified sender in SendGrid)
+- `NOTIFICATION_EMAIL` (for example `rigourbuilderslts2020@gmail.com`)
+- `API_PORT` (default `3001`)
+- `CORS_ORIGIN` (default frontend origin, e.g. `http://localhost:10000`)
+
+### 2. Run frontend and email API
+
+Use two terminals:
+
+```sh
+npm run dev
+```
+
+```sh
+npm run dev:server
+```
+
+### 3. API endpoints
+
+- `POST /api/contact`
+- `POST /api/quote`
+- `GET /api/health`

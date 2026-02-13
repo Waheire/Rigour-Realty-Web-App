@@ -2,9 +2,9 @@ export const COMPANY_INFO = {
   name: "Rigour Realty Limited",
   shortName: "Rigour Realty Ltd",
   tagline: "Building With Excellence",
-  phone: "+254 737 599 523",
-  email: "info@rigourrealty.co.ke",
-  whatsapp: "+254 737 599 523",
+  phone: "+254 716 973 973",
+  email: "rigourbuildersltd2020@gmail.com",
+  whatsapp: "+254 716 973 973",
   address: "Nairobi, Kenya",
   workingHours: {
     weekdays: "8:00 AM - 6:00 PM",

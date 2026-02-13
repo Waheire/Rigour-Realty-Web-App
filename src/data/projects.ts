@@ -16,19 +16,66 @@ export interface Project {
     role: string;
   };
   images: string[];
+  phaseImages?: ProjectPhaseImages;
   featured: boolean;
 }
+
+export type ProjectPhaseImageKey =
+  | "consultation"
+  | "design"
+  | "costing"
+  | "execution"
+  | "handover";
+
+export type ProjectPhaseImages = Partial<Record<ProjectPhaseImageKey, string[]>>;
+
+export interface ProjectTimelinePhase {
+  title: "Consultation" | "Design & Planning" | "Costing" | "Execution" | "Handover";
+  description: string;
+  image: string;
+}
+
+export const timelinePhaseFallbackImages = [
+  "/project-1.png",
+  "/project-2.png",
+  "/project-3.png",
+  "/Bomet-3.jpg",
+  "/bush-stone-1.png",
+] as const;
+
+const buildTimelinePhases = (
+  images: string[],
+  descriptions: {
+    consultation: string;
+    designPlanning: string;
+    costing: string;
+    execution: string;
+    handover: string;
+  },
+): ProjectTimelinePhase[] => {
+  const imagePool = Array.from(new Set([...images, ...timelinePhaseFallbackImages]));
+  const getImage = (index: number) =>
+    imagePool[index] || timelinePhaseFallbackImages[index] || "/placeholder.svg";
+
+  return [
+    { title: "Consultation", description: descriptions.consultation, image: getImage(0) },
+    { title: "Design & Planning", description: descriptions.designPlanning, image: getImage(1) },
+    { title: "Costing", description: descriptions.costing, image: getImage(2) },
+    { title: "Execution", description: descriptions.execution, image: getImage(3) },
+    { title: "Handover", description: descriptions.handover, image: getImage(4) },
+  ];
+};
 
 export const projects: Project[] = [
   {
     id: "1",
-    slug: "nakuru-family-residence",
-    title: "Nakuru Family Residence",
+    slug: "bomet-kaplong-residence",
+    title: "Bomet Kaplong Residence",
     category: "construction",
-    location: "Nakuru, Kenya",
-    duration: "8 months",
-    completedDate: "December 2024",
-    description: "A stunning 4-bedroom family home featuring modern architectural design with traditional Kenyan influences. The property includes spacious living areas, a home office, and beautifully landscaped gardens.",
+    location: "Bomet, Kenya",
+    duration: "12 months",
+    completedDate: "December 2022",
+    description: "A stunning 8-bedroom family home featuring modern architectural design with traditional Kenyan influences. The property includes spacious living areas, a home office, and beautifully landscaped gardens.",
     scope: [
       "Complete architectural design",
       "Foundation to roof construction",
@@ -42,15 +89,26 @@ export const projects: Project[] = [
       author: "James Kamau",
       role: "Homeowner",
     },
-    images: ["/placeholder.svg"],
+    images: ["/bomet-k-show.jpeg"],
+    phaseImages: {
+      consultation: ["/bomet-k-11.jpg", "/bomet-k-1.jpeg", "/bomet-k-2.jpeg", "/bomet-k-3.jpeg"],
+      design: ["/bomet-k-1.jpeg", "/bomet-k-2.jpeg", "/bomet-k-3.jpeg", "/bomet-k-4.jpeg", "/bomet-k-5.jpeg", "/bomet-k-6.jpeg", "/bomet-k-7.jpeg"],
+      costing: ["/cost.webp"],
+      execution: [
+        "/bomet-k-e-1.jpeg", "/bomet-k-e-2.jpeg", "/bomet-k-e-3.jpeg", "/bomet-k-e-4.jpeg", "/bomet-k-e-5.jpeg", "/bomet-k-e-6.jpeg", "/bomet-k-e-7.jpeg",
+        "/bomet-k-e-8.jpeg", "/bomet-k-e-10.jpeg", "/bomet-k-e-11.jpeg", "/bomet-k-e-12.jpeg", "/bomet-k-e-13.jpeg", "/bomet-k-e-14.jpeg", "/bomet-k-e-15.jpeg", "/bomet-k-e-16.jpeg", "/bomet-k-e-17.jpeg",
+        "/bomet-k-e-18.jpeg", "/bomet-k-e-19.jpeg", "/bomet-k-e-20.jpeg", "/bomet-k-e-21.jpeg",
+      ],
+      handover: ["/Bomet-k-8.jpg", "/Bomet-k-9.jpg", "/Bomet-k-10.jpg", "/bomet-k-11.jpg"],
+    },
     featured: true,
   },
   {
     id: "2",
-    slug: "eldoret-commercial-plaza",
-    title: "Eldoret Commercial Plaza",
+    slug: "siaya-ugunja",
+    title: "Four Bedroom Maissionate in Siaya",
     category: "construction",
-    location: "Eldoret, Kenya",
+    location: "Siaya, Kenya",
     duration: "14 months",
     completedDate: "October 2024",
     description: "A modern 3-story commercial plaza featuring retail spaces on the ground floor and office suites on upper levels. The building incorporates sustainable design principles and smart building technology.",
@@ -67,18 +125,25 @@ export const projects: Project[] = [
       author: "Sarah Wanjiku",
       role: "Property Developer",
     },
-    images: ["/placeholder.svg"],
+    images: ["/siaya-1.jpeg"],
+    phaseImages: {
+      consultation: ["/siaya-1.jpeg", "/siaya-2.jpeg", "/siaya-3.jpeg"],
+      design: ["/siaya-4.jpeg", "/siaya-5.jpeg", "/siaya-6.jpeg", "/siaya-7.jpeg", "/siaya-8.jpeg", "/siaya-9.jpeg", "/siaya-10.jpeg", "/siaya-11.jpeg", "/siaya-12.jpeg", "/siaya-13.jpeg", "/siaya-14.jpeg", "/siaya-15.jpeg", "/siaya-16.jpeg"],
+      costing: ["/cost.webp"],
+      execution: ["/siaya-19.jpeg", "/siaya-20.jpeg", "/siaya-21.jpeg", "/siaya-22.jpeg", "/siaya-23.jpeg", "/siaya-24.jpeg", "/siaya-25.jpeg", "/siaya-26.jpeg", "/siaya-27.jpeg", "/siaya-28.jpeg", "/siaya-30.jpeg", "/siaya-33.jpeg", "/siaya-34.jpeg", "/siaya-35.jpeg", "/siaya-36.jpeg", "/siaya-37.jpeg", "/siaya-38.jpeg", "/siaya-39.jpeg", "/siaya-40.jpeg", "/siaya-41.jpeg", "/siaya-42.jpeg"],
+      handover: ["/siaya-1.jpeg"],
+    },
     featured: true,
   },
   {
     id: "3",
-    slug: "kisumu-lakeside-villa",
-    title: "Kisumu Lakeside Villa",
-    category: "finishing",
-    location: "Kisumu, Kenya",
-    duration: "3 months",
-    completedDate: "November 2024",
-    description: "Complete interior renovation of a lakeside villa, featuring luxury finishes, custom ceiling designs, and a cohesive color palette inspired by the natural surroundings.",
+    slug: "makueni-residence",
+    title: "Makueni Residence Construction",
+    category: "construction",
+    location: "Makueni, Kenya",
+    duration: "12 months",
+    completedDate: "In progress (expected completion: December 2026)",
+    description: "Modern residential construction project in Makueni, featuring contemporary design and high-quality finishes.",
     scope: [
       "Full interior plastering and painting",
       "Custom gypsum ceiling installation",
@@ -86,19 +151,26 @@ export const projects: Project[] = [
       "Decorative wall features",
     ],
     servicesUsed: ["Interior & Exterior Finishing"],
-    results: "Transformed a dated property into a stunning modern villa, increasing property value by an estimated 40%.",
+    results: "The project is currently on track for completion by December 2026, with all interior finishing works progressing smoothly and receiving positive feedback from the client.",
     testimonial: {
-      quote: "The finishing work was flawless. Every detail was executed with precision and care.",
+      quote: "The interior finishing work has transformed our home into a beautiful space. The team is professional and attentive to our preferences.",
       author: "Dr. Peter Otieno",
       role: "Property Owner",
     },
-    images: ["/placeholder.svg"],
+    images: ["makueni-1.jpeg"],
+    phaseImages: {
+      consultation: ["/makueni-2.jpeg", "/makueni-1.jpeg"],
+      design: ["/makueni-1.jpeg"],
+      costing: ["/cost.webp"],
+      execution: ["/makueni-3.jpeg", "/makueni-4.jpeg", "/makueni-5.jpeg", "/makueni-6.jpeg", "/makueni-7.jpeg", "/makueni-8.jpeg", "/makueni-9.jpeg", "/makueni-10.jpeg"],
+      handover: ["/makueni-11.jpeg", "/makueni-12.jpeg", "/makueni-13.jpeg", "/makueni-14.jpeg", "/makueni-15.jpeg", "/makueni-16.jpeg"],
+    },
     featured: true,
   },
   {
     id: "4",
-    slug: "naivasha-farm-house",
-    title: "Naivasha Farm House",
+    slug: "kiu-river-kasarani-house",
+    title: "Kiu River Kasarani House",
     category: "bush-stones",
     location: "Naivasha, Kenya",
     duration: "6 months",
@@ -117,15 +189,22 @@ export const projects: Project[] = [
       author: "Michael Njoroge",
       role: "Farm Owner",
     },
-    images: ["/placeholder.svg"],
+    images: ["/kiu-river-k-1.jpeg"],
+    phaseImages: {
+      consultation: ["/kiu-river-k-1.jpeg"],
+      design: ["/kiu-river-k-1.jpeg"],
+      costing: ["/cost.webp"],
+      execution: ["/kiu-river-k-1.jpeg"],
+      handover: ["/kiu-river-k-1.jpeg"],
+    },
     featured: true,
   },
   {
     id: "5",
-    slug: "thika-industrial-yard",
-    title: "Thika Industrial Yard",
+    slug: "river-view-estate-kiambu",
+    title: "River View Estate Kiambu",
     category: "cabro",
-    location: "Thika, Kenya",
+    location: "Kiambu, Kenya",
     duration: "5 weeks",
     completedDate: "August 2024",
     description: "Heavy-duty cabro paving for an industrial yard designed to handle truck traffic and equipment movement. Includes proper drainage systems and clearly marked zones.",
@@ -142,13 +221,20 @@ export const projects: Project[] = [
       author: "John Mwangi",
       role: "Factory Manager",
     },
-    images: ["/placeholder.svg"],
+    images: ["/river-view-estate.jpeg"],
+    phaseImages: {
+      consultation: ["/river-view-estate.jpeg"],
+      design: ["/river-view-estate.jpeg"],
+      costing: ["/cost.webp"],
+      execution: ["/river-view-estate.jpeg"],
+      handover: ["/river-view-estate.jpeg"],
+    },
     featured: true,
   },
   {
     id: "6",
-    slug: "karen-residential-estate",
-    title: "Karen Residential Estate",
+    slug: "rumuruti-contemporary-2-bedroom",
+    title: "Rumuriti Contemporary Two Bedroom",
     category: "drawing",
     location: "Karen, Nairobi",
     duration: "2 months",
@@ -162,130 +248,140 @@ export const projects: Project[] = [
     ],
     servicesUsed: ["Architectural & Structural Drawing"],
     results: "Approved designs now under construction by our team, with 6 units already sold off-plan based on our visualizations.",
-    images: ["/placeholder.svg"],
+    images: ["/rumuruti-2.jpeg"],
+    phaseImages: {
+      consultation: ["/rumuruti-2.jpeg"],
+      design: ["/rumuruti-2.jpeg"],
+      costing: ["/cost.webp"],
+      execution: ["/rumuruti-2.jpeg"],
+      handover: ["/rumuruti-2.jpeg"],
+    },
     featured: true,
   },
-  {
-    id: "7",
-    slug: "mombasa-beach-resort",
-    title: "Mombasa Beach Resort Renovation",
-    category: "finishing",
-    location: "Mombasa, Kenya",
-    duration: "4 months",
-    completedDate: "June 2024",
-    description: "Complete interior and exterior renovation of a 20-room beach resort, incorporating coastal design elements and durable marine-grade finishes.",
-    scope: [
-      "Guest room renovations",
-      "Restaurant and lounge finishing",
-      "Pool deck retiling",
-      "Exterior painting and repairs",
-    ],
-    servicesUsed: ["Interior & Exterior Finishing"],
-    results: "Resort reopened to rave reviews with a 35% increase in bookings compared to pre-renovation levels.",
-    images: ["/placeholder.svg"],
-    featured: false,
-  },
-  {
-    id: "8",
-    slug: "nyeri-school-block",
-    title: "Nyeri School Block",
-    category: "construction",
-    location: "Nyeri, Kenya",
-    duration: "10 months",
-    completedDate: "May 2024",
-    description: "Construction of a new 12-classroom block with laboratory facilities, staff rooms, and modern amenities for a secondary school.",
-    scope: [
-      "New classroom block construction",
-      "Laboratory fitting",
-      "Sports court paving",
-      "Walkway and landscaping",
-    ],
-    servicesUsed: ["Building & Construction", "Interior & Exterior Finishing", "Cabro Paving"],
-    results: "Provided modern educational facilities benefiting over 500 students annually.",
-    images: ["/placeholder.svg"],
-    featured: false,
-  },
-  {
-    id: "9",
-    slug: "machakos-boundary-wall",
-    title: "Machakos Estate Boundary Wall",
-    category: "bush-stones",
-    location: "Machakos, Kenya",
-    duration: "2 months",
-    completedDate: "April 2024",
-    description: "Decorative bush stone perimeter wall with integrated security features and vehicle entry points for a private residential estate.",
-    scope: [
-      "1.2km bush stone wall construction",
-      "Gate pillar construction",
-      "Security lighting installation",
-      "Decorative capping",
-    ],
-    servicesUsed: ["Building with Bush Stones"],
-    results: "Created a stunning and secure boundary that has become a talking point in the neighborhood.",
-    images: ["/placeholder.svg"],
-    featured: false,
-  },
-  {
-    id: "10",
-    slug: "ruiru-apartment-complex",
-    title: "Ruiru Apartment Complex",
-    category: "construction",
-    location: "Ruiru, Kenya",
-    duration: "18 months",
-    completedDate: "March 2024",
-    description: "A modern 48-unit apartment complex featuring studio, one, and two-bedroom units with shared amenities including parking, gardens, and a fitness area.",
-    scope: [
-      "Full architectural design",
-      "Multi-story construction",
-      "Complete unit finishing",
-      "Common area development",
-    ],
-    servicesUsed: ["Architectural & Structural Drawing", "Building & Construction", "Interior & Exterior Finishing", "Cabro Paving"],
-    results: "Delivered a high-quality residential complex that sold out within 3 months of completion.",
-    images: ["/placeholder.svg"],
-    featured: false,
-  },
-  {
-    id: "11",
-    slug: "kitale-church-project",
-    title: "Kitale Church Renovation",
-    category: "finishing",
-    location: "Kitale, Kenya",
-    duration: "6 weeks",
-    completedDate: "February 2024",
-    description: "Complete interior refurbishment of a historic church, preserving original features while upgrading finishes and acoustics.",
-    scope: [
-      "Interior painting and restoration",
-      "Acoustic ceiling installation",
-      "New flooring throughout",
-      "Sanctuary decorative elements",
-    ],
-    servicesUsed: ["Interior & Exterior Finishing"],
-    results: "Restored the church to its former glory while adding modern functionality, much to the congregation's delight.",
-    images: ["/placeholder.svg"],
-    featured: false,
-  },
-  {
-    id: "12",
-    slug: "ngong-driveway-project",
-    title: "Ngong Hills Residence Driveway",
-    category: "cabro",
-    location: "Ngong, Kenya",
-    duration: "2 weeks",
-    completedDate: "January 2024",
-    description: "Premium cabro paving for a hillside residence, featuring custom patterns, integrated drainage, and natural stone accent borders.",
-    scope: [
-      "150sqm driveway paving",
-      "Walkway installation",
-      "Drainage integration",
-      "Natural stone borders",
-    ],
-    servicesUsed: ["Cabro Paving"],
-    results: "Created a stunning entrance that perfectly complements the hillside property's aesthetic.",
-    images: ["/placeholder.svg"],
-    featured: false,
-  },
 ];
+
+export const projectTimelinePhases: Record<string, ProjectTimelinePhase[]> = {
+  "bomet-residence": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Aligned family priorities, room count, and lifestyle needs for an 8-bedroom home.",
+      designPlanning: "Prepared structural layouts, elevations, and phased work plan for approvals.",
+      costing: "Produced a transparent bill of quantities with milestone-based cost control.",
+      execution: "Built foundation to roof and coordinated finishing with strict quality supervision.",
+      handover: "Completed final snagging and delivered a move-in ready home ahead of schedule.",
+    },
+  ),
+  "bush-stone-construction": buildTimelinePhases(
+    ["/bush-stone-1.png"],
+    {
+      consultation: "Defined tenant mix, floor usage, and investment goals for the commercial plaza.",
+      designPlanning: "Optimized circulation, service cores, and shop frontage for high occupancy.",
+      costing: "Set phased construction budgets around structure, MEP, and interior packages.",
+      execution: "Delivered shell, common areas, and interior-ready spaces for multiple businesses.",
+      handover: "Ran final checks and released the project for immediate tenant fit-outs.",
+    },
+  ),
+  "kisumu-lakeside-villa": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Captured finish preferences and ambience goals for a full villa refresh.",
+      designPlanning: "Mapped ceiling profiles, wall treatments, and tile transitions room by room.",
+      costing: "Matched premium material choices to a controlled renovation budget.",
+      execution: "Installed gypsum ceilings, finishes, and detailing with minimal owner disruption.",
+      handover: "Delivered a polished interior with a full quality walkthrough.",
+    },
+  ),
+  "naivasha-farm-house": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Agreed on rustic style direction using local bush stone and timber accents.",
+      designPlanning: "Developed mixed-material details balancing durability and visual warmth.",
+      costing: "Planned sourcing and labor rates for stonework-intensive construction.",
+      execution: "Completed structural stone walls and coordinated natural-finish detailing.",
+      handover: "Final inspection confirmed performance and aesthetic goals were achieved.",
+    },
+  ),
+  "thika-industrial-yard": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Assessed traffic load, turning radii, and drainage pain points in the yard.",
+      designPlanning: "Designed paving zones and slope strategy for heavy-duty performance.",
+      costing: "Priced sub-base, pavers, and drainage works for long-term durability.",
+      execution: "Installed industrial-grade cabro paving with strict compaction control.",
+      handover: "Verified line-marked operational zones and seamless truck movement.",
+    },
+  ),
+  "karen-residential-estate": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Defined unit mix, amenity needs, and market positioning for the estate.",
+      designPlanning: "Produced master plan, unit prototypes, and infrastructure layouts.",
+      costing: "Estimated approval, design, and phased implementation budgets.",
+      execution: "Completed technical drawing package and stakeholder review iterations.",
+      handover: "Submitted approved documents and visualization assets for project launch.",
+    },
+  ),
+  "mombasa-beach-resort": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Reviewed guest experience goals and coastal durability requirements.",
+      designPlanning: "Sequenced room, lounge, and deck upgrades to reduce downtime.",
+      costing: "Balanced marine-grade materials with target return-on-renovation metrics.",
+      execution: "Delivered interiors and exteriors in coordinated renovation phases.",
+      handover: "Opened refreshed facilities after final QC and operational sign-off.",
+    },
+  ),
+  "nyeri-school-block": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Confirmed classroom capacity, lab needs, and circulation priorities.",
+      designPlanning: "Planned teaching blocks, utility routes, and outdoor amenity areas.",
+      costing: "Structured procurement and labor budgets around education infrastructure standards.",
+      execution: "Constructed classrooms, labs, and paved access areas to spec.",
+      handover: "Completed compliance checks and delivered the facility for student use.",
+    },
+  ),
+  "machakos-boundary-wall": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Defined security intent, access points, and desired perimeter character.",
+      designPlanning: "Detailed wall sections, gate pillars, and lighting interfaces.",
+      costing: "Prepared itemized costs for stonework, metalwork, and electrical scope.",
+      execution: "Built 1.2km decorative perimeter wall with controlled section sequencing.",
+      handover: "Finalized gates, capping, and lighting with a full client walkthrough.",
+    },
+  ),
+  "ruiru-apartment-complex": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Aligned density, unit mix, and amenity expectations with the investor brief.",
+      designPlanning: "Developed multi-block construction flow and common-area architecture.",
+      costing: "Set staged funding plan for shell, finishes, and landscape delivery.",
+      execution: "Delivered structural works and complete fit-outs across all unit types.",
+      handover: "Completed final snag closure and released units for occupation.",
+    },
+  ),
+  "kitale-church-project": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Documented preservation priorities and acoustic upgrade requirements.",
+      designPlanning: "Mapped restoration methods and compatible modern finish systems.",
+      costing: "Planned budget around careful restoration and phased congregation access.",
+      execution: "Executed interior refurbishment while protecting heritage elements.",
+      handover: "Delivered upgraded worship spaces after final acoustic and finish checks.",
+    },
+  ),
+  "ngong-driveway-project": buildTimelinePhases(
+    ["/Bomet-1.jpg", "/Bomet-2.jpg"],
+    {
+      consultation: "Reviewed slope, water runoff, and arrival aesthetics for the residence.",
+      designPlanning: "Designed paving pattern, borders, and drainage channels for the site.",
+      costing: "Priced pavers, base prep, and drainage integration for lifecycle value.",
+      execution: "Installed premium cabro system with precise levels and edge control.",
+      handover: "Delivered a finished driveway with clean detailing and runoff performance.",
+    },
+  ),
+};
 
 export const getProjectBySlug = (slug: string): Project | undefined => {
   return projects.find(project => project.slug === slug);
