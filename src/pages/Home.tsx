@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, ShieldCheck, Clock, Users, FileCheck, Award, Building2, Wrench, Package, HeadphonesIcon, ChevronRight } from "lucide-react";
+import { ArrowRight, ShieldCheck, Clock, Users, FileCheck, Award, Building2, Wrench, Package, HeadphonesIcon, ChevronRight, type LucideIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,7 @@ import { getFeaturedProjects } from "@/data/projects";
 import { testimonials } from "@/data/testimonials";
 import { TRUST_BADGES, WORK_PROCESS, WHY_CHOOSE_US } from "@/lib/constants";
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, LucideIcon> = {
   ShieldCheck,
   Clock,
   Users,

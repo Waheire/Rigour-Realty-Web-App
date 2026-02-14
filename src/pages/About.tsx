@@ -30,7 +30,7 @@ const values = [
 
 const team = [
   {
-    name: "John Rigour",
+    name: "Ken Wanjohi Gatura",
     role: "Founder & CEO",
     image: "/placeholder.svg",
   },
