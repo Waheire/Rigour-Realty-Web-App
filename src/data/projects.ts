@@ -2,7 +2,7 @@ export interface Project {
   id: string;
   slug: string;
   title: string;
-  category: "construction" | "finishing" | "bush-stones" | "cabro" | "drawing";
+  category: "construction" | "finishing" | "bush-stones" | "cabro" | "drawing" | "Green Bush Masonary Works" | "Modern Low Cost Flat Roof";
   location: string;
   duration: string;
   completedDate: string;
@@ -171,7 +171,7 @@ export const projects: Project[] = [
     id: "4",
     slug: "river-view-estate-kiambu",
     title: "River View Estate Kiambu",
-    category: "cabro",
+    category: "Green Bush Masonary Works",
     location: "Kiambu, Kenya",
     duration: "6 months",
     completedDate: "September 2024",
@@ -235,7 +235,7 @@ export const projects: Project[] = [
     id: "6",
     slug: "rumuruti-contemporary-2-bedroom",
     title: "Rumuriti Contemporary Two Bedroom",
-    category: "drawing",
+    category: "Modern Low Cost Flat Roof",
     location: "Karen, Nairobi",
     duration: "2 months",
     completedDate: "July 2024",
