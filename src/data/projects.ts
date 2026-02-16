@@ -157,7 +157,7 @@ export const projects: Project[] = [
       author: "Dr. Peter Otieno",
       role: "Property Owner",
     },
-    images: ["makueni-1.jpeg"],
+    images: ["/makueni-1.jpeg"],
     phaseImages: {
       consultation: ["/makueni-2.jpeg", "/makueni-1.jpeg"],
       design: ["/makueni-1.jpeg"],
