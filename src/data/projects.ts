@@ -258,6 +258,33 @@ export const projects: Project[] = [
     },
     featured: true,
   },
+  {
+    id: "7",
+    slug: "ruai-maissionate-3-bedroom",
+    title: "Ruai Maissionate - 3 Bedrrom ",
+    category: "construction",
+    location: "Ruai, Nairobi",
+    duration: "6 months",
+    completedDate: "Ongoing",
+    description: "Discover the perfect blend of comfort and contemporary living in this well-appointed 3-bedroom maisonette nestled in the serene neighbourhood of Ruai, on Nairobi's eastern corridor. Thoughtfully designed across two floors, this home offers generous living spaces ideal for families and professionals seeking a peaceful retreat with excellent connectivity to the city.",
+    scope: [
+      "3 spacious bedrooms, master en-suite",
+      "Individual house designs",
+      "Infrastructure planning",
+      "Approval documentation",
+    ],
+    servicesUsed: ["Architectural & Structural Drawing"],
+    results: "Whether you're buying your first home or expanding your property portfolio, this maisonette represents outstanding value in one of Nairobi's fastest-growing residential zones.",
+    images: ["/ruai/sample-1.jpeg"],
+    phaseImages: {
+      consultation: ["/ruai/sample-1.jpeg", "/ruai/sample-2.jpeg"],
+      design: ["/ruai/sample-1.jpeg"],
+      costing: ["/cost.webp"],
+      execution: ["/ruai/sample-9.jpeg", "/ruai/sample-10.jpeg", "/ruai/sample-3.jpeg", "/ruai/sample-4.jpeg", "/ruai/sample-5.jpeg", "/ruai/sample-6.jpeg", "/ruai/sample-7.jpeg", "/ruai/sample-8.jpeg"],
+      handover: ["/ruai/sample-19.jpeg", "/ruai/sample-12.jpeg", "/ruai/sample-3.jpeg", "/ruai/sample-13.jpeg", "/ruai/sample-14.jpeg", "/ruai/sample-15.jpeg", "/ruai/sample-16.jpeg", "/ruai/sample-17.jpeg"],
+    },
+    featured: true,
+  },
 ];
 
 export const projectTimelinePhases: Record<string, ProjectTimelinePhase[]> = {
