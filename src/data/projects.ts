@@ -285,6 +285,33 @@ export const projects: Project[] = [
     },
     featured: true,
   },
+  {
+    id: "8",
+    slug: "eldoret-soy",
+    title: "Eldoret Soy Maissionate ",
+    category: "construction",
+    location: "Soy, Eldoret",
+    duration: "6 months",
+    completedDate: "Ongoing",
+    description: "Discover the perfect blend of comfort and contemporary living in this well-appointed maisonette nestled in the serene neighbourhood of Eldoret. Thoughtfully designed across two floors, this home offers generous living spaces ideal for families and professionals seeking a peaceful retreat with excellent connectivity to the city.",
+    scope: [
+      "56spacious bedrooms, master en-suite",
+      "Individual house designs",
+      "Infrastructure planning",
+      "Approval documentation",
+    ],
+    servicesUsed: ["Architectural & Structural Drawing"],
+    results: "Whether you're buying your first home or expanding your property portfolio, this maisonette represents outstanding value in one of Eldoret's fastest-growing residential zones.",
+    images: ["/eldoret-soy/sample-3.jpeg"],
+    phaseImages: {
+      consultation: ["/eldoret-soy/sample-3.jpeg", "/eldoret-soy/sample-2.jpeg"],
+      design: ["/eldoret-soy/sample-3.jpeg"],
+      costing: ["/cost.webp"],
+      execution: ["/eldoret-soy/sample-1.jpeg", "/eldoret-soy/sample-2.jpeg", "/eldoret-soy/sample-3.jpeg", "/eldoret-soy/sample-4.jpeg", "/eldoret-soy/sample-5.jpeg", "/eldoret-soy/sample-6.jpeg", "/eldoret-soy/sample-7.jpeg", "/eldoret-soy/sample-8.jpeg", "/eldoret-soy/sample-9.jpeg", "/eldoret-soy/sample-10.jpeg", "/eldoret-soy/sample-11.jpeg", "/eldoret-soy/sample-12.jpeg", "/eldoret-soy/sample-13.jpeg"],
+      handover: ["/eldoret-soy/sample-2.jpeg", "/eldoret-soy/sample-3.jpeg", "/eldoret-soy/sample-4.jpeg"],
+    },
+    featured: true,
+  },
 ];
 
 export const projectTimelinePhases: Record<string, ProjectTimelinePhase[]> = {
