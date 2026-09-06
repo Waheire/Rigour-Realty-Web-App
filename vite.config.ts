@@ -43,14 +43,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
   preview: {
-    // Same configuration for preview/production mode
-    host: "rigourrealty.com",
-    port: parseInt(process.env.PORT || '10000'),
-  },
-  plugins: [react()].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
-  },
+  host: true, // binds 0.0.0.0/:: — required on Render
+  port: parseInt(process.env.PORT || '10000'),
+  allowedHosts: [
+    'rigourrealty.com',
+    'www.rigourrealty.com',
+    '.onrender.com',
+  ],
+},
 }));
