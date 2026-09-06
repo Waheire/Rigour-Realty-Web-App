@@ -22,7 +22,9 @@ export default defineConfig(({ mode }) => ({
     // Allow hosts dynamically based on environment
     allowedHosts: process.env.RENDER_EXTERNAL_URL
       ? [new URL(process.env.RENDER_EXTERNAL_URL).hostname]
-      : ['.onrender.com', 'localhost'],
+      : ['.onrender.com', 'localhost',
+          'rigourrealty.com'
+        ],
 
     // Listen on all network interfaces (IPv6 and IPv4)
     host: "::",
